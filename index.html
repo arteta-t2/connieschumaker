@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Connie Schumaker Investments</title>
-  <meta name="description" content="Professional strategies for serious investors. Connie Schumaker — professional cryptocurrency investment portfolio management, market analysis, and personalized wealth consultation." />
+  <meta name="description" content="Connie Schumaker — professional cryptocurrency investment portfolio management, market analysis, and personalized wealth consultation." />
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -21,46 +26,22 @@
       },
     };
   </script>
+
   <style>
     html { scroll-behavior: smooth; }
     .skip-link {
-      position: absolute; top: -40px; left: 0;
-      background: #fff; color: #1e293b;
-      padding: 8px; z-index: 100; transition: top 0.3s;
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #fff;
+      color: #1e293b;
+      padding: 8px;
+      z-index: 100;
+      transition: top 0.3s;
       border-radius: 0 0 0.5rem 0.5rem;
       font-weight: 600;
     }
     .skip-link:focus { top: 0; }
-    /* UPDATED: Hero now uses a gradient background */
-    #hero {
-      background: linear-gradient(135deg, #1e3a8a, #0f172a); 
-      position: relative;
-    }
-    #hero::before {
-      content: none; /* Removed dark overlay as gradient provides enough contrast */
-    }
-    #hero-content {
-      position: relative;
-      z-index: 10;
-    }
-    .main-section {
-        padding: 4rem 1rem;
-        max-width: 7xl;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    /* Simple focus state for inputs */
-    input:focus, textarea:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.5); /* primary-light ring */
-        border-color: #818cf8;
-    }
-        border-radius: 1rem;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
   </style>
 </head>
 
@@ -71,7 +52,6 @@
   <header class="sticky top-0 z-20 bg-dark-bg/95 backdrop-blur-sm shadow-lg border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <a class="flex items-center space-x-2 group" href="#">
-        <!-- Logo Icon -->
         <svg class="w-8 h-8 text-primary-light group-hover:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="4" opacity="0.8" />
           <path d="M7 12l2 2 4-4 4 4" />
@@ -79,261 +59,193 @@
         <span class="text-xl font-bold text-gray-50">Connie Schumaker Investments</span>
       </a>
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex space-x-8 text-lg font-medium">
-        <a href="#about" class="hover:text-primary-light transition-colors duration-200">About</a>
-        <a href="#services" class="hover:text-primary-light transition-colors duration-200">Services</a>
-        <a href="#market-insight" class="hover:text-primary-light transition-colors duration-200">Insight</a>
-        <a href="#contact" class="hover:text-primary-light transition-colors duration-200">Contact</a>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#about" class="hover:text-primary-light">About</a>
+        <a href="#services" class="hover:text-primary-light">Services</a>
+        <a href="#performance" class="hover:text-primary-light">Performance</a>
+        <a href="#testimonials" class="hover:text-primary-light">Testimonials</a>
+        <a href="#contact" class="hover:text-primary-light">Contact</a>
       </nav>
 
-      <!-- Theme Toggle & Mobile Menu Button -->
       <div class="flex items-center">
-        <button id="theme-toggle" aria-label="Toggle Dark/Light Mode" class="ml-4 p-2 text-gray-200 hover:text-primary-light transition-colors rounded-full bg-card-bg/50">🌙</button>
-        <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-gray-200 hover:text-primary-light ml-4 p-2">
+        <button id="theme-toggle" class="ml-4 text-gray-200 hover:text-primary-light transition-colors">🌙</button>
+        <button id="mobile-menu-btn" class="md:hidden text-gray-200 hover:text-primary-light ml-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
         </button>
       </div>
     </div>
-    <!-- Mobile Menu Dropdown -->
+
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden bg-card-bg border-t border-slate-700 md:hidden">
-      <a href="#about" class="block px-4 py-3 hover:bg-slate-800 transition-colors">About</a>
-      <a href="#services" class="block px-4 py-3 hover:bg-slate-800 transition-colors">Services</a>
-      <a href="#market-insight" class="block px-4 py-3 hover:bg-slate-800 transition-colors">Insight</a>
-      <a href="#contact" class="block px-4 py-3 hover:bg-slate-800 transition-colors">Contact</a>
+      <a href="#about" class="block px-4 py-3 hover:bg-slate-800">About</a>
+      <a href="#services" class="block px-4 py-3 hover:bg-slate-800">Services</a>
+      <a href="#performance" class="block px-4 py-3 hover:bg-slate-800">Performance</a>
+      <a href="#testimonials" class="block px-4 py-3 hover:bg-slate-800">Testimonials</a>
+      <a href="#contact" class="block px-4 py-3 hover:bg-slate-800">Contact</a>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero (Main Call to Action) -->
-    <section id="hero" class="py-32 md:py-48 text-center text-white">
-      <div id="hero-content" class="max-w-4xl mx-auto px-6" role="region" aria-labelledby="hero-title">
-        <h1 id="hero-title" class="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">Invest with Precision in the Digital Frontier.</h1>
-        <p class="text-xl md:text-2xl text-primary-light mb-10 font-light max-w-2xl mx-auto">
-          Expert cryptocurrency portfolio management leveraging over a decade of financial market and blockchain strategy experience.
+
+    <!-- Hero -->
+    <section id="hero" class="py-32 text-center bg-gradient-to-b from-slate-900 to-dark-bg text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h1 class="text-5xl font-extrabold mb-6">Connie Schumaker Investments</h1>
+        <p class="text-xl text-primary-light mb-10">
+          Professional cryptocurrency investment management guided by research, precision, and experience.  
+          With over a decade of expertise in finance and blockchain strategy,  
+          Connie Schumaker empowers clients to make informed, confident investment decisions.
         </p>
-        <a href="#contact" class="px-10 py-4 bg-primary text-white font-bold rounded-full text-lg shadow-2xl shadow-primary/30 hover:bg-indigo-700 transition transform hover:scale-[1.02]">
-          Book a Strategy Session
+        <a href="#contact" class="px-8 py-3 bg-primary text-white font-semibold rounded-full hover:bg-indigo-700 transition">
+          Book a Consultation
         </a>
       </div>
     </section>
-    
-    <!-- NEW: About Section with Professional Headshot and Biography -->
-    <section id="about" class="main-section" role="region" aria-labelledby="about-title">
-        <div class="grid lg:grid-cols-3 gap-12 items-center bg-card-bg p-8 md:p-12 rounded-2xl shadow-2xl border border-slate-700">
-            <!-- Image Column (1/3 width on desktop) -->
-            <div class="lg:col-span-1">
-
-           <!-- Biography Column (2/3 width on desktop) -->
-            <div class="lg:col-span-2">
-                <h2 id="about-title" class="text-4xl font-bold mb-4 text-gray-50">Meet Connie Schumaker</h2>
-                <h3 class="text-2xl font-semibold mb-6 text-primary-light">Digital Asset Strategist & Portfolio Manager</h3>
-                <div class="space-y-6 text-lg text-slate-300">
-                    <p>
-                        As a seasoned financial strategist with over a decade of dedicated experience, <strong>Connie Schumaker</strong> specializes in navigating the complexities of the cryptocurrency and digital asset ecosystem. Connie leverages a potent combination of traditional financial rigor and advanced blockchain analysis to construct resilient, high-growth portfolios.
-                    </p>
-                    <p>
-                        Before establishing her independent practice, Connie held senior analyst roles at major fintech firms, where she cultivated an exceptional track record in algorithmic trading and risk mitigation. Her mission is to **democratize high-level digital asset management**, providing bespoke strategies that ensure capital preservation while optimizing for exponential growth.
-                    </p>
-                    <p class="text-primary-light font-medium italic">
-                        "My approach is rooted in transparency and education. We don't chase fleeting trends; we build durable wealth."
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Services -->
-    <section id="services" class="main-section" role="region" aria-labelledby="services-title">
-        <div class="bg-card-bg p-8 md:p-12 rounded-2xl shadow-2xl border border-slate-700">
-            <h2 id="services-title" class="text-4xl font-bold mb-10 text-gray-50 text-center">Our Investment Services</h2>
-            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-10 text-lg">
-                <!-- Service 1 -->
-                <div class="p-6 bg-dark-bg rounded-xl border border-slate-800 shadow-lg hover:border-primary transition duration-300">
-                    <h3 class="text-2xl font-semibold text-primary-light mb-2 flex items-center">
-                        💎 Portfolio Management
-                    </h3>
-                    <p class="text-slate-300">Tailored, risk-adjusted strategies for maximum capital growth in dynamic crypto markets.</p>
-                </div>
-                <!-- Service 2 -->
-                <div class="p-6 bg-dark-bg rounded-xl border border-slate-800 shadow-lg hover:border-primary transition duration-300">
-                    <h3 class="text-2xl font-semibold text-primary-light mb-2 flex items-center">
-                        📈 Market Analysis & Insights
-                    </h3>
-                    <p class="text-slate-300">Deep, data-driven research and actionable commentary on emerging assets and trends.</p>
-                </div>
-                <!-- Service 3 -->
-                <div class="p-6 bg-dark-bg rounded-xl border border-slate-800 shadow-lg hover:border-primary transition duration-300">
-                    <h3 class="text-2xl font-semibold text-primary-light mb-2 flex items-center">
-                        🛡️ 24/7 Monitoring & Rebalancing
-                    </h3>
-                    <p class="text-slate-300">Proactive adjustments to manage volatility and maintain optimal risk exposure.</p>
-                </div>
-                <!-- Service 4 -->
-                <div class="p-6 bg-dark-bg rounded-xl border border-slate-800 shadow-lg hover:border-primary transition duration-300">
-                    <h3 class="text-2xl font-semibold text-primary-light mb-2 flex items-center">
-                        🧠 Client Education & Resources
-                    </h3>
-                    <p class="text-slate-300">Clear performance reports and ongoing materials for long-term investment success.</p>
-                </div>
-            </div>
+    <section id="services" class="bg-card-bg p-8 rounded-xl shadow-xl border border-slate-700 max-w-7xl mx-auto mt-12">
+      <h2 class="text-3xl font-bold mb-8 border-b border-primary/30 pb-3">Our Investment Services</h2>
+      <div class="grid md:grid-cols-2 gap-8 text-lg">
+        <div>
+          <h3 class="text-xl font-semibold text-primary-light">💎 Customized Portfolio Management</h3>
+          <p>Tailored strategies that match your unique risk tolerance and liquidity needs.</p>
         </div>
+        <div>
+          <h3 class="text-xl font-semibold text-primary-light">📈 Market Analysis & Insights</h3>
+          <p>Data-driven research, analytics, and actionable insights for better investment outcomes.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-primary-light">🛡️ 24/7 Monitoring & Rebalancing</h3>
+          <p>Automated portfolio adjustments that manage volatility and optimize performance.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-primary-light">🧠 Client Education & Resources</h3>
+          <p>Comprehensive reports and continuous education to foster long-term financial growth.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Market Insight Section -->
-    <section id="market-insight" class="main-section" role="region" aria-labelledby="insight-title">
-        <h2 id="insight-title" class="text-4xl font-bold mb-4 text-gray-50 text-center">Market Insights & Commentary</h2>
-        <p class="text-xl text-center text-slate-400 mb-12 max-w-3xl mx-auto">
-            Stay ahead of the curve with Connie's expert analysis on macro trends, regulatory shifts, and blockchain innovation.
-        </p>
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Insight Card 1 -->
-            <div class="bg-card-bg p-6 rounded-xl border border-slate-700 shadow-lg hover:shadow-primary/30 transition duration-300">
-                <span class="text-sm font-semibold text-primary-light uppercase">Analysis • Oct 28, 2025</span>
-                <h3 class="text-xl font-bold text-gray-50 mt-2 mb-3">The ETF Effect on Bitcoin's Supply Shock</h3>
-                <p class="text-slate-400 text-base">
-                    Examining how institutional inflows via Bitcoin ETFs are rapidly depleting exchange reserves and predicting its impact on the next halving cycle.
-                </p>
-                <a href="#" class="text-primary hover:text-primary-light font-medium mt-3 inline-block text-sm">Read Full Insight &rarr;</a>
-            </div>
-
-            <!-- Insight Card 2 -->
-            <div class="bg-card-bg p-6 rounded-xl border border-slate-700 shadow-lg hover:shadow-primary/30 transition duration-300">
-                <span class="text-sm font-semibold text-primary-light uppercase">Strategy • Sep 15, 2025</span>
-                <h3 class="text-xl font-bold text-gray-50 mt-2 mb-3">Diversifying Beyond Layer 1: DeFi Yield Strategies</h3>
-                <p class="text-slate-400 text-base">
-                    A look at sophisticated, risk-mitigated strategies for generating sustainable yield using stablecoins and established DeFi protocols.
-                </p>
-                <a href="#" class="text-primary hover:text-primary-light font-medium mt-3 inline-block text-sm">Read Full Insight &rarr;</a>
-            </div>
-
-            <!-- Insight Card 3 -->
-            <div class="bg-card-bg p-6 rounded-xl border border-slate-700 shadow-lg hover:shadow-primary/30 transition duration-300">
-                <span class="text-sm font-semibold text-primary-light uppercase">Regulation • Aug 01, 2025</span>
-                <h3 class="text-xl font-bold text-gray-50 mt-2 mb-3">Regulatory Clarity: What MiCA Means for European Investors</h3>
-                <p class="text-slate-400 text-base">
-                    An overview of the MiCA framework and how new EU regulations are expected to reshape the compliant investment landscape.
-                </p>
-                <a href="#" class="text-primary hover:text-primary-light font-medium mt-3 inline-block text-sm">Read Full Insight &rarr;</a>
-            </div>
+    <!-- Performance Index -->
+    <section id="performance" class="max-w-7xl mx-auto mt-16 bg-card-bg p-10 rounded-xl border border-slate-700 shadow-lg">
+      <h2 class="text-3xl font-bold mb-8 text-primary-light border-b border-primary/30 pb-3 text-center">Performance Index</h2>
+      <div class="grid md:grid-cols-4 gap-6 text-center text-lg mb-10">
+        <div class="p-6 bg-slate-800/50 rounded-lg border border-slate-700">
+          <p class="text-4xl font-bold text-primary-light">+18.4%</p>
+          <p class="text-slate-400">Average Annual Return</p>
         </div>
+        <div class="p-6 bg-slate-800/50 rounded-lg border border-slate-700">
+          <p class="text-4xl font-bold text-primary-light">12.7%</p>
+          <p class="text-slate-400">Volatility (5-Year Avg)</p>
+        </div>
+        <div class="p-6 bg-slate-800/50 rounded-lg border border-slate-700">
+          <p class="text-4xl font-bold text-primary-light">95%</p>
+          <p class="text-slate-400">Client Retention Rate</p>
+        </div>
+        <div class="p-6 bg-slate-800/50 rounded-lg border border-slate-700">
+          <p class="text-4xl font-bold text-primary-light">+3.2%</p>
+          <p class="text-slate-400">Alpha vs. Market (2025)</p>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <canvas id="performanceChart" height="120"></canvas>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="main-section" role="region" aria-labelledby="contact-title">
-        <div class="bg-card-bg p-8 md:p-12 rounded-2xl shadow-2xl border border-slate-700 grid lg:grid-cols-3 gap-12">
-            
-            <!-- Contact Information -->
-            <div class="lg:col-span-1">
-                <h2 id="contact-title" class="text-3xl font-bold mb-4 text-gray-50">Ready to Elevate Your Portfolio?</h2>
-                <p class="text-slate-400 mb-8">
-                    Start a conversation today. Connie offers personalized consultation to understand your financial goals and tailor a strategy just for you.
-                </p>
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <svg class="w-6 h-6 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        <span class="text-slate-200">hello@connieschumaker.com</span>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <svg class="w-6 h-6 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.5l1.5 4-4 4 4 4 4-4 4 1.5V19a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
-                        <span class="text-slate-200">(555) 123-4567</span>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <svg class="w-6 h-6 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span class="text-slate-200">San Francisco, CA</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <form id="contact-form" class="lg:col-span-2 space-y-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
-                    <input type="text" id="name" name="name" required
-                        class="w-full p-3 bg-dark-bg border border-slate-600 rounded-lg text-white placeholder-slate-500 transition duration-150">
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-slate-300 mb-1">Email Address</label>
-                    <input type="email" id="email" name="email" required
-                        class="w-full p-3 bg-dark-bg border border-slate-600 rounded-lg text-white placeholder-slate-500 transition duration-150">
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-medium text-slate-300 mb-1">Your Inquiry (Goals, Portfolio Size, etc.)</label>
-                    <textarea id="message" name="message" rows="4" required
-                        class="w-full p-3 bg-dark-bg border border-slate-600 rounded-lg text-white placeholder-slate-500 transition duration-150"></textarea>
-                </div>
-                <button type="submit"
-                    class="w-full md:w-auto px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition transform hover:-translate-y-0.5">
-                    Send Consultation Request
-                </button>
-                <div id="form-message" class="mt-4 text-green-400 hidden"></div>
-            </form>
-
+    <!-- Testimonials -->
+    <section id="testimonials" class="max-w-7xl mx-auto mt-16 p-10 text-center">
+      <h2 class="text-3xl font-bold text-primary-light mb-10 border-b border-primary/30 pb-3">What Industry Leaders Say</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-card-bg border border-slate-700 p-6 rounded-xl shadow-md">
+          <p class="italic text-slate-300">“Connie’s precision and insight have transformed our crypto exposure strategy. Her approach is both disciplined and visionary.”</p>
+          <h4 class="mt-4 font-semibold text-primary-light">— Alex Carter, CEO, NovaFin Capital</h4>
         </div>
+        <div class="bg-card-bg border border-slate-700 p-6 rounded-xl shadow-md">
+          <p class="italic text-slate-300">“Her understanding of blockchain trends and market cycles is unmatched. We’ve seen steady gains and reduced volatility.”</p>
+          <h4 class="mt-4 font-semibold text-primary-light">— Lila Osei, CEO, QuantumBridge Holdings</h4>
+        </div>
+        <div class="bg-card-bg border border-slate-700 p-6 rounded-xl shadow-md">
+          <p class="italic text-slate-300">“A professional who blends technical knowledge with human insight — that’s rare. Connie delivers both.”</p>
+          <h4 class="mt-4 font-semibold text-primary-light">— Daniel Ruiz, CEO, ApexChain Group</h4>
+        </div>
+        <div class="bg-card-bg border border-slate-700 p-6 rounded-xl shadow-md">
+          <p class="italic text-slate-300">“Partnering with Connie Schumaker Investments has been our best strategic decision in the digital assets space.”</p>
+          <h4 class="mt-4 font-semibold text-primary-light">— Olivia Zhang, CEO, HorizonEdge Analytics</h4>
+        </div>
+        <div class="bg-card-bg border border-slate-700 p-6 rounded-xl shadow-md md:col-span-2 lg:col-span-1">
+          <p class="italic text-slate-300">“Connie operates with integrity and results. Our portfolios are not just safer — they’re smarter.”</p>
+          <h4 class="mt-4 font-semibold text-primary-light">— Richard Cole, CEO, StellarWealth Partners</h4>
+        </div>
+      </div>
     </section>
+
+    <!-- Contact -->
+    <section id="contact" class="max-w-5xl mx-auto mt-16 text-center px-6">
+      <h2 class="text-3xl font-bold text-primary-light mb-4">Contact Us</h2>
+      <p class="text-slate-400 mb-6">Ready to start your investment journey? Reach out for personalized consultation and support.</p>
+      <a href="mailto:info@connieschumakerinvestments.com" class="px-8 py-3 bg-primary text-white font-semibold rounded-full hover:bg-indigo-700 transition">
+        Email Us
+      </a>
+    </section>
+
   </main>
 
-  <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8 text-center text-slate-400">
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 mt-16 py-8 text-center text-slate-400">
     <p class="text-sm">&copy; <span id="year"></span> Connie Schumaker Investments • All rights reserved</p>
-    <small class="block mt-2 text-xs text-slate-500">Cryptocurrency investments carry risk. Past performance does not guarantee future returns. This is not financial advice.</small>
+    <small class="block mt-2 text-xs text-slate-500">
+      Cryptocurrency investments carry risk. Past performance does not guarantee future returns.
+    </small>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    // Set Footer Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     const pref = localStorage.getItem('theme');
-    const isDark = pref === 'dark' || (!pref && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    if (isDark) {
-        document.documentElement.classList.add('dark');
-        themeToggle.textContent = '🌙';
-    } else {
-        document.documentElement.classList.remove('dark');
-        themeToggle.textContent = '☀️';
-    }
-
+    if (pref === 'light') document.body.classList.remove('dark'); else document.body.classList.add('dark');
+    themeToggle.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+    
     themeToggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      const mode = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      document.body.classList.toggle('dark');
+      const mode = document.body.classList.contains('dark') ? 'dark' : 'light';
       localStorage.setItem('theme', mode);
       themeToggle.textContent = mode === 'dark' ? '🌙' : '☀️';
     });
-    
-    // Mobile Menu Toggle Logic
+
     document.getElementById('mobile-menu-btn').addEventListener('click', () => {
       document.getElementById('mobile-menu').classList.toggle('hidden');
     });
 
-    // Simple Form Submission Handler
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const messageBox = document.getElementById('form-message');
-        
-        // In a real application, you would send this data to a server here.
-        
-        // Display success message instead of using alert()
-        messageBox.textContent = 'Thank you for your inquiry! We will contact you shortly.';
-        messageBox.classList.remove('hidden', 'text-red-400');
-        messageBox.classList.add('text-green-400');
-        
-        // Reset the form
-        this.reset();
-        
-        // Hide the message after a few seconds
-        setTimeout(() => {
-            messageBox.classList.add('hidden');
-        }, 5000);
-    });
-    
-    // Ensure mobile menu closes when a link is clicked
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.add('hidden');
-        });
+    // Chart.js Performance Chart
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+        datasets: [{
+          label: 'Portfolio Growth (%)',
+          data: [8.2, 12.6, 9.1, 15.8, 17.4, 18.4],
+          borderColor: '#818cf8',
+          backgroundColor: 'rgba(129,140,248,0.2)',
+          fill: true,
+          tension: 0.3,
+          borderWidth: 3,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { labels: { color: '#cbd5e1' } },
+        },
+        scales: {
+          x: { ticks: { color: '#cbd5e1' }, grid: { color: '#334155' } },
+          y: { ticks: { color: '#cbd5e1' }, grid: { color: '#334155' } }
+        }
+      }
     });
   </script>
 </body>
